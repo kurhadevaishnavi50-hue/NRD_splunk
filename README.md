@@ -77,6 +77,5 @@ This project is developed for educational and authorized security-testing purpos
 
 ## Author
 
-**Vedant Kokate**
+**Vaishnavi Kurhade**
 
-Cybersecurity / Computer Science
