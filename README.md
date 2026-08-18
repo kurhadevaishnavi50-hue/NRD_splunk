@@ -67,6 +67,34 @@ The project looks for patterns that may indicate reconnaissance activity, includ
 
 When suspicious activity crosses the configured detection threshold, the system generates a potential reconnaissance alert.
 
+Splunk Dashboard
+================
+
+Dashboard Name:
+Network Reconnaissance Detection Dashboard
+
+Purpose:
+The dashboard provides visualization and monitoring of network reconnaissance
+activities detected by the Python-based detection system.
+
+Panels:
+1. Total Attacks
+2. Scan Type
+3. Top Attacker
+4. Severity Distribution
+5. Timeline
+6. Most Targeted Ports
+7. Critical Alert
+
+Data Source:
+alerts.csv
+
+Splunk Index:
+network_recon
+
+Detection Pipeline:
+Nmap → tcpdump → PCAP → Python/Scapy → alerts.csv → Splunk → Dashboard
+
 ## Expected Result
 
 The system helps identify possible network scanning activity and presents the detected events in Splunk. The dashboard can be used by a security analyst to investigate the source IP, destination IP, ports, scan type, and frequency of suspicious traffic.
