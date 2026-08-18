@@ -293,43 +293,108 @@ splunk/queries.md
 
 ## 13. Splunk Dashboard
 
-The dashboard provides a centralized view of network reconnaissance activity.
+The Splunk dashboard provides a centralized view of detected network reconnaissance activities. It helps the security analyst quickly understand the number, type, source, severity, and timing of detected attacks.
 
-The dashboard contains panels such as:
+The dashboard contains the following panels:
 
-### Total Events
+### 1. Total Attacks
 
-Displays the total number of network events.
+Displays the total number of detected reconnaissance attacks during the selected time period.
 
-### Top Source IPs
+### 2. Scan Type
 
-Shows the source addresses generating the highest amount of traffic.
+Shows the distribution of different reconnaissance activities, such as:
 
-### Top Destination IPs
+* SYN Scan
+* Port Scan
+* Ping Sweep
+* Other detected scan types
 
-Shows frequently targeted systems.
+This helps identify which type of reconnaissance activity is most common.
 
-### Top Targeted Ports
+### 3. Top Attacker
 
-Shows ports receiving the highest number of connection attempts.
+Displays the source IP addresses responsible for the highest number of detected attacks.
 
-### Network Activity Timeline
+This helps the analyst identify the systems generating suspicious network activity.
 
-Displays network activity over time.
+### 4. Severity Distribution
 
-### Protocol Distribution
+Shows the number of detected attacks categorized by severity, such as:
 
-Shows the protocols present in the captured traffic.
+* Low
+* Medium
+* High
+* Critical
 
-### Scan Type Distribution
+This helps prioritize security events that require immediate investigation.
 
-Shows detected reconnaissance categories.
+### 5. Timeline
 
-### Detection Results
+Displays detected attacks over time.
 
-Displays source IPs showing suspicious scanning behavior.
+The timeline helps identify:
 
----
+* Sudden increases in attacks
+* Repeated scanning activity
+* Attack periods
+* Changes in reconnaissance behavior
+
+### 6. Most Targeted Ports
+
+Displays the destination ports that were targeted most frequently during reconnaissance activity.
+
+This can help identify services that are being actively probed by the attacker.
+
+### 7. Critical Alert
+
+Displays critical reconnaissance events that require immediate attention.
+
+The panel can provide information such as:
+
+```text
+Source IP
+Destination IP
+Targeted Port
+Scan Type
+Severity
+Timestamp
+Alert Message
+```
+
+### Dashboard Layout
+
+```text
+┌─────────────────────────────────────────────────────┐
+│              NETWORK RECONNAISSANCE                 │
+│                    DASHBOARD                        │
+├─────────────────────────────────────────────────────┤
+│                                                     │
+│                  TOTAL ATTACKS                      │
+│                                                     │
+├────────────────────────┬────────────────────────────┤
+│                        │                            │
+│      SCAN TYPE         │       TOP ATTACKER         │
+│                        │                            │
+├────────────────────────┼────────────────────────────┤
+│                        │                            │
+│  SEVERITY DISTRIBUTION │       TIMELINE             │
+│                        │                            │
+├────────────────────────┴────────────────────────────┤
+│                                                     │
+│              MOST TARGETED PORTS                    │
+│                                                     │
+├─────────────────────────────────────────────────────┤
+│                                                     │
+│                 CRITICAL ALERT                      │
+│                                                     │
+└─────────────────────────────────────────────────────┘
+```
+
+### Dashboard Purpose
+
+The dashboard provides a quick security overview and allows the analyst to move from a high-level view of total attacks to specific details such as the attacker IP, scan type, targeted ports, severity, and critical alerts.
+
 
 ## 14. Detection Example
 
