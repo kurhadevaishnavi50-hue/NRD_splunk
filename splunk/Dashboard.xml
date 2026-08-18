@@ -1,0 +1,329 @@
+{
+    "title": "Network Reconnaissance Detection Dashboard Copy",
+    "description": "",
+    "inputs": {},
+    "defaults": {
+        "dataSources": {
+            "ds.search": {
+                "options": {
+                    "queryParameters": {}
+                }
+            },
+            "ds.spl2": {
+                "options": {
+                    "queryParameters": {}
+                }
+            }
+        },
+        "visualizations": {
+            "global": {
+                "showProgressBar": true
+            }
+        }
+    },
+    "visualizations": {
+        "viz_0CRDN24s": {
+            "dataSources": {
+                "primary": "ds_9ps1HY8v"
+            },
+            "options": {},
+            "title": "Total Attacks - Total Attacks",
+            "type": "splunk.singlevalue"
+        },
+        "viz_YeVGTELs": {
+            "dataSources": {
+                "primary": "ds_va4EetXO"
+            },
+            "options": {
+                "legendTruncation": "ellipsisMiddle",
+                "showRoundedY2AxisLabels": false,
+                "showY2MajorGridLines": true,
+                "y2AxisAbbreviation": "off",
+                "yAxisAbbreviation": "off"
+            },
+            "title": "Timeline - Timeline",
+            "type": "splunk.line"
+        },
+        "viz_fDGcYVpe": {
+            "dataSources": {
+                "fieldsummary": "ds_jbhYI9BT",
+                "primary": "ds_elabHaYx"
+            },
+            "options": {
+                "list.drilldown": "none"
+            },
+            "showProgressBar": true,
+            "title": "Critical Alerts - Critical Alerts",
+            "type": "splunk.events"
+        },
+        "viz_iMSHqJ8p": {
+            "dataSources": {
+                "primary": "ds_O3StUaKP"
+            },
+            "options": {},
+            "showProgressBar": true,
+            "title": "Severity Distribution - Severity Distribution",
+            "type": "splunk.pie"
+        },
+        "viz_n51Jomuj": {
+            "dataSources": {
+                "fieldsummary": "ds_jT7FkgqT",
+                "primary": "ds_h5GxKm4e"
+            },
+            "options": {
+                "list.drilldown": "none"
+            },
+            "title": "Most Targeted Ports",
+            "type": "splunk.events"
+        },
+        "viz_sONUF4Ll": {
+            "dataSources": {
+                "primary": "ds_Nwu5bc1f"
+            },
+            "options": {
+                "legendTruncation": "ellipsisMiddle",
+                "showRoundedY2AxisLabels": false,
+                "showY2MajorGridLines": true,
+                "y2AxisAbbreviation": "off",
+                "yAxisAbbreviation": "off"
+            },
+            "showProgressBar": true,
+            "title": "Top Attacker IP - Top Attacker IP",
+            "type": "splunk.bar"
+        },
+        "viz_utKGmZDT": {
+            "dataSources": {
+                "primary": "ds_rHsPeX14"
+            },
+            "options": {},
+            "showProgressBar": true,
+            "title": "Scan Type - Scan Type",
+            "type": "splunk.pie"
+        },
+        "viz_vXKsAStq": {
+            "dataSources": {
+                "primary": "ds_YniZFlkk"
+            },
+            "options": {
+                "drilldown": "none",
+                "showInternalFields": false
+            },
+            "showProgressBar": true,
+            "title": "Attack Heat Map - Attack Heat Map",
+            "type": "splunk.table"
+        }
+    },
+    "dataSources": {
+        "ds_9ps1HY8v": {
+            "name": "Total Attacks - Total Attacks search",
+            "options": {
+                "query": "index=network_recon\n| stats count",
+                "queryParameters": {
+                    "earliest": "-24h@h",
+                    "latest": "now"
+                }
+            },
+            "type": "ds.search"
+        },
+        "ds_Nwu5bc1f": {
+            "name": "Top Attacker IP - Top Attacker IP search",
+            "options": {
+                "query": "index=network_recon\n| top \"source_ip\"",
+                "queryParameters": {
+                    "earliest": "-24h@h",
+                    "latest": "now"
+                }
+            },
+            "type": "ds.search"
+        },
+        "ds_O3StUaKP": {
+            "name": "Severity Distribution - Severity Distribution search",
+            "options": {
+                "query": "index=network_recon\n| stats count by severity",
+                "queryParameters": {
+                    "earliest": "-24h@h",
+                    "latest": "now"
+                }
+            },
+            "type": "ds.search"
+        },
+        "ds_YniZFlkk": {
+            "name": "Attack Heat Map - Attack Heat Map search",
+            "options": {
+                "query": "index=network_recon\n| chart count over \"source_ip\" by \"scan_type\"",
+                "queryParameters": {
+                    "earliest": "-24h@h",
+                    "latest": "now"
+                }
+            },
+            "type": "ds.search"
+        },
+        "ds_elabHaYx": {
+            "name": "Critical Alerts - Critical Alerts 1 search",
+            "options": {
+                "query": "index=network_recon severity=CRITICAL",
+                "queryParameters": {
+                    "earliest": "-24h@h",
+                    "latest": "now"
+                }
+            },
+            "type": "ds.search"
+        },
+        "ds_h5GxKm4e": {
+            "name": "Most Targeted Ports - Events 1 search",
+            "options": {
+                "query": "index=network_recon\n| top Port",
+                "queryParameters": {
+                    "earliest": "-24h@h",
+                    "latest": "now"
+                }
+            },
+            "type": "ds.search"
+        },
+        "ds_jT7FkgqT": {
+            "name": "Most Targeted Ports - Events 2 search",
+            "options": {
+                "extend": "ds_h5GxKm4e",
+                "query": "| fieldsummary maxvals=10"
+            },
+            "type": "ds.chain"
+        },
+        "ds_jbhYI9BT": {
+            "name": "Critical Alerts - Critical Alerts 2 search",
+            "options": {
+                "extend": "ds_elabHaYx",
+                "query": "| fieldsummary maxvals=10"
+            },
+            "type": "ds.chain"
+        },
+        "ds_rHsPeX14": {
+            "name": "Scan Type - Scan Type search",
+            "options": {
+                "query": "index=network_recon\n| stats count by \"scan_type\"",
+                "queryParameters": {
+                    "earliest": "-24h@h",
+                    "latest": "now"
+                }
+            },
+            "type": "ds.search"
+        },
+        "ds_va4EetXO": {
+            "name": "Timeline - Timeline search",
+            "options": {
+                "query": "index=network_recon\n| timechart count by \"Scan Type\"",
+                "queryParameters": {
+                    "earliest": "-24h@h",
+                    "latest": "now"
+                }
+            },
+            "type": "ds.search"
+        }
+    },
+    "layout": {
+        "globalInputs": [],
+        "layoutDefinitions": {
+            "layout_1": {
+                "options": {
+                    "height": 1500,
+                    "width": 1440
+                },
+                "structure": [
+                    {
+                        "item": "viz_0CRDN24s",
+                        "position": {
+                            "h": 250,
+                            "w": 480,
+                            "x": 0,
+                            "y": 0
+                        },
+                        "type": "block"
+                    },
+                    {
+                        "item": "viz_utKGmZDT",
+                        "position": {
+                            "h": 250,
+                            "w": 480,
+                            "x": 480,
+                            "y": 0
+                        },
+                        "type": "block"
+                    },
+                    {
+                        "item": "viz_sONUF4Ll",
+                        "position": {
+                            "h": 250,
+                            "w": 480,
+                            "x": 960,
+                            "y": 0
+                        },
+                        "type": "block"
+                    },
+                    {
+                        "item": "viz_iMSHqJ8p",
+                        "position": {
+                            "h": 250,
+                            "w": 1440,
+                            "x": 0,
+                            "y": 250
+                        },
+                        "type": "block"
+                    },
+                    {
+                        "item": "viz_YeVGTELs",
+                        "position": {
+                            "h": 250,
+                            "w": 1440,
+                            "x": 0,
+                            "y": 500
+                        },
+                        "type": "block"
+                    },
+                    {
+                        "item": "viz_n51Jomuj",
+                        "position": {
+                            "h": 250,
+                            "w": 1440,
+                            "x": 0,
+                            "y": 750
+                        },
+                        "type": "block"
+                    },
+                    {
+                        "item": "viz_fDGcYVpe",
+                        "position": {
+                            "h": 250,
+                            "w": 1440,
+                            "x": 0,
+                            "y": 1000
+                        },
+                        "type": "block"
+                    },
+                    {
+                        "item": "viz_vXKsAStq",
+                        "position": {
+                            "h": 250,
+                            "w": 1440,
+                            "x": 0,
+                            "y": 1250
+                        },
+                        "type": "block"
+                    }
+                ],
+                "type": "grid"
+            }
+        },
+        "options": {},
+        "tabs": {
+            "items": [
+                {
+                    "label": "New tab",
+                    "layoutId": "layout_1"
+                }
+            ]
+        }
+    },
+    "applicationProperties": {
+        "hideEdit": false,
+        "hideExport": false
+    }
+}
